@@ -90,6 +90,8 @@ class MultilingualTranslationTask(FairseqTask):
                                  'language token. (src/tgt)')
         parser.add_argument('--decoder-langtok', action='store_true',
                             help='replace beginning-of-sentence in target sentence with target language token')
+        parser.add_argument('--truncate-source', action='store_true', default=False,
+                            help='truncate source to max-source-positions')
         # fmt: on
 
     def __init__(self, args, dicts, training):
@@ -203,6 +205,7 @@ class MultilingualTranslationTask(FairseqTask):
                 left_pad_target=self.args.left_pad_target,
                 max_source_positions=self.args.max_source_positions,
                 max_target_positions=self.args.max_target_positions,
+                truncate_source=self.args.truncate_source
             )
             return self.alter_dataset_langtok(
                 langpair_dataset,
